@@ -29,24 +29,6 @@ class bcolors:
 
 
 
-'''To enforce naming convention.'''
-
-def is_naming_correct(name_1, name_2):
-
-	bw_dot_index = name_1.find(".")
-	cl_dot_index = name_2.find(".")
-
-	bw_clean_name = name_1[:bw_dot_index]
-	cl_clean_name = name_2[:cl_dot_index]
-
-
-	if(cl_clean_name == bw_clean_name + "_c"):
-		return True
-	else:
-		return True
-	
-
-
 
 
 
@@ -79,21 +61,12 @@ def append_id(filename):
 
 	[Assuming this is being run as a module for batch tasks]
 	
-	When ran as a module, they must pass the naming convention check before color_blend does any operations.
 	Black and white image has to be in number sequence. Ex: (0001.jpg, 0002.jpg)
 	Colored image has to match its respective B & W image's name, but with "_c" appended. Ex: (0001_c.jpg, 0002_c.jpg)
 	Output name should be a formatted string; the number sequence appended by "_f" for final. Ex: (0001_f.png, 0002_f.png) 
 '''
 
 def color_blend(black_white, colored):
-
-	# Name convention enforcement
-	if __name__ != "__main__":
-		if(is_naming_correct(black_white, colored) != True):
-			print("Naming convention must be enforced if ran as module.")
-			print("Colored image has to match its respective B & W image's name, but with _c appended. Ex: (0001_c.jpg, 0002_c.jpg)")
-			sys.exit()
-
 
 
 	#Make is_image() check here. Can't just be the name that determines if the image is legit. Implement try-catch mechanism
@@ -138,12 +111,6 @@ def color_blend(black_white, colored):
 
 
 
-
-
-''' 
-	If this were ran as a standalone, it will expect two parameters: The black & white image, and the chroma image. 
-	If not utilized as standalone, the naming convention must be enforced. See Parameter requirements above.
-'''
 
 def main():
 
