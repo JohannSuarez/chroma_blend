@@ -27,14 +27,14 @@ python3 chroma_blend.py [black_and_white.mp4] [colorized.mp4]
 Since this program as a whole relies on two smaller modules, the modules themselves can be used as standalone programs.
 The modules located in the "cblend_modules" directory are:
 
-colorizer.py - For colorizing the frames.
+**colorizer.py** - For colorizing the frames.
 
 ```bash
 python3 colorizer.py [bw_image] [colorized_image]
 ```
 
 
-vid2pngs.py - For splitting videos into pngs. A directory is created for the output pngs.
+**vid2pngs.py** - For splitting videos into pngs. A directory is created for the output pngs.
 
 ```bash
 python3 vid2pngs.py [input_video]
