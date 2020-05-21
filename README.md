@@ -20,7 +20,7 @@ git clone https://github.com/JohannSuarez/chroma_blend.git
 
 ## Usage
 
-```python
+```bash
 python3 chroma_blend.py [black_and_white.mp4] [colorized.mp4]
 ```
 
@@ -28,12 +28,18 @@ Since this program as a whole relies on two smaller modules, the modules themsel
 The modules located in the "cblend_modules" directory are:
 
 colorizer.py - For colorizing the frames.
-## Usage
+
+```bash
 python3 colorizer.py [bw_image] [colorized_image]
+```
+
 
 vid2pngs.py - For splitting videos into pngs. A directory is created for the output pngs.
 
-## Usage: python3 vid2pngs.py [input_video]
+```bash
+python3 vid2pngs.py [input_video]
+```
+
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
