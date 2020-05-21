@@ -117,7 +117,13 @@ def main():
 	#Create argparse to be able to dictate input.
 
 	print("Vid2PNGs activated as main.")
-	frame = frame_extract("vid_out.mp4")
+	
+	parser = argparse.ArgumentParser()
+	parser.add_argument("vid_input", help="The .mp4 input to convert to png frames.")
+	user_input = parser.parse_args()
+
+
+	frame = frame_extract(user_input.vid_input, "NULL")
 	
 
 
