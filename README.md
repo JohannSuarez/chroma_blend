@@ -6,6 +6,7 @@ The program takes two inputs: The original black and white mp4, and the colored 
 
 Usage: python3 chroma_blend.py [black_and_white.mp4] [colorized.mp4]
 
+For a quick demonstration, do: "python3 chroma_blend.py demo_files/bw.mp4 demo_files/vid_out.mp4" 
 
 Since this program as a whole relies on two smaller modules, the modules themselves can be used as standalone programs.
 The modules located in the "cblend_modules" directory are:
