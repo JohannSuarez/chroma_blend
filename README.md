@@ -18,6 +18,12 @@ Download the repository:
 git clone https://github.com/JohannSuarez/chroma_blend.git
 ```
 
+Once inside the chroma_blend directory, install the required dependencies:
+'''bash
+pip install -r requirements.txt
+'''
+You're good to go!
+
 ## Usage
 
 ```bash
