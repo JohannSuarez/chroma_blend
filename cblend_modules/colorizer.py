@@ -88,12 +88,18 @@ def color_blend(black_white, colored):
 	bw_image_rgb = bw_image.convert('RGB')
 	remastered_image_rgb = remastered_image.convert('RGB')
 
+	#numpy array
+
+	bw_image_rgb = np.array(bw_image_rgb)	
+	remastered_image_rgb = np.array(remastered_image_rgb)
 
 	# Convert both the input image and color mask to Hue Saturation Value (HSV) colorspace
 	img_hsv = color.rgb2hsv(bw_image_rgb)
 	color_mask_hsv = color.rgb2hsv(remastered_image_rgb)				# Color mask is THE colored(remastered) version.
-
 	
+
+
+
 	#Replacing the hue and saturation of the black and white image with values from color mask
 	img_hsv[..., 0] = color_mask_hsv[..., 0]
 	img_hsv[..., 1] = color_mask_hsv[..., 1]
