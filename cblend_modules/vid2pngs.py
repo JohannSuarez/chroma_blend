@@ -32,7 +32,7 @@ def custom_directory_name(name_input):
 
 def frame_extract(vid_input, which_directory):
     '''
-    The main module component. Extracts frames from given .mp4
+    The main component. Extracts frames from given .mp4
 	Input is .mp4, and an optional directory name.
     '''
     # Checks that the vid duration isn't 0.0
