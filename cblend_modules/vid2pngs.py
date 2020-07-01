@@ -26,8 +26,34 @@ def custom_directory_name(name_input):
     Creates a string for directory name.
     String is based off original filename.
     '''
-    dot_index = name_input.find(".")
+
+    # Starts at two, because the string could start with double periods
+    # if the file is outside the directory.
+
+    dot_index = name_input.find(".", 2)
+
     return name_input[:dot_index]
+
+
+def frame_namer(cap, ret, dir_name, frame_count, suffix):
+    '''
+    A helper function for frame_extract, made to avoid writing the same code twice.
+    In charge of creating, and naming the frames.
+    '''
+
+    while ret:
+
+        try:
+            ret, frame = cap.read()
+            file_name = dir_name + "/" + \
+                str(frame_count) + suffix + ".png"
+            frame_count = frame_count + 1
+            cv2.imwrite(file_name, frame)
+            print("Extracted " + file_name + "...")
+        except: # pylint: disable=W0702
+            print("No frame " + file_name + " . Ending extraction.")
+            return frame_count - 2
+
 
 
 def frame_extract(vid_input, which_directory):
@@ -55,30 +81,24 @@ def frame_extract(vid_input, which_directory):
         if os.path.isdir(dir_name):
             print("Directory " + dir_name + " exists. Cleaning...")
             # Clean
-            shutil.rmtree(dir_name)  
+            shutil.rmtree(dir_name)
             os.mkdir(dir_name)
         else:
             # Make custom directory
-            os.mkdir(dir_name)  
+            print("Hello" + dir_name)
+            os.mkdir(dir_name)
 
         file_name = dir_name + "/" + str(frame_count) + ".png"
         cv2.imwrite(file_name, frame)
         print("Extracted " + file_name + "...")
+        suffix = ""
 
         # First parameter is its name, second is the image.
         frame_count = frame_count + 1
 
-        while ret:
+        frame_namer(cap, ret, dir_name, frame_count, suffix)
 
-            try:
-                ret, frame = cap.read()
-                file_name = dir_name + "/" + str(frame_count) + ".png"
-                frame_count = frame_count + 1
-                cv2.imwrite(file_name, frame)
-                print("Extracted " + file_name + "...")
-            except: # pylint: disable=W0702
-                print("No frame " + file_name + " . Ending extraction.")
-                return 0
+
 
     else:
         # Only difference is directory output.
@@ -102,7 +122,7 @@ def frame_extract(vid_input, which_directory):
 
             dir_name = which_directory
 
-            if(os.path.isdir(dir_name)):
+            if os.path.isdir(dir_name):
                 shutil.rmtree(dir_name)  # Clean
                 os.mkdir(dir_name)
             else:
@@ -114,18 +134,8 @@ def frame_extract(vid_input, which_directory):
             # First param is its name, second is the image.
             frame_count = frame_count + 1
 
-            while ret:
-
-                try:
-                    ret, frame = cap.read()
-                    file_name = dir_name + "/" + \
-                        str(frame_count) + suffix + ".png"
-                    frame_count = frame_count + 1
-                    cv2.imwrite(file_name, frame)
-                    print("Extracted " + file_name + "...")
-                except: # pylint: disable=W0702
-                    print("No frame " + file_name + " . Ending extraction.")
-                    return frame_count - 2
+            #Variables used: ret, frame, file_name, frame_count, suffix
+            return frame_namer(cap, ret, dir_name, frame_count, suffix)
 
 
 def main():
