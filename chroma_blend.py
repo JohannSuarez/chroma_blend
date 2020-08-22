@@ -6,6 +6,7 @@ The main module of the chroma_blend package.
 import os
 import argparse
 import shutil
+import cv2
 from cblend_modules.colorizer import BColors as fontc
 from cblend_modules.colorizer import color_blend
 from cblend_modules.vid2pngs import frame_extract
@@ -51,6 +52,39 @@ def folders_manager():
         print("output_frames directory found. Clearing contents..")
         shutil.rmtree('output_frames/')
         os.mkdir("output_frames")
+
+
+def png2mp4(vidin):
+    '''
+    Function that converts the sequence of pngs to mp4's.
+    '''
+
+
+
+    #Get FPS of inputted bw video.
+    cap=cv2.VideoCapture(vidin)
+    fps = cap.get(cv2.CAP_PROP_FPS)
+
+    image_folder = 'output_frames'
+    video_name = 'final_output.avi'
+
+
+    #Preparing all variables required to write a video using the f_out frames.
+    images = [img for img in os.listdir(image_folder) if img.endswith(".png")]
+    frame = cv2.imread(os.path.join(image_folder, images[0]))
+    height, width, layers = frame.shape
+    video = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc(*'XVID'), fps, (width,height)) 
+
+    #The list is initially unsorted, this is to fix that.
+    images = sorted(images, key=lambda x: int(x[0:-6]))
+
+    for image in images:
+        video.write(cv2.imread(os.path.join(image_folder, image)))
+
+
+    cv2.destroyAllWindows()
+    video.release()
+
 
 
 def main():
@@ -109,6 +143,7 @@ def main():
     elif bw_frames_count < source_frames_count:
         loop_len_count = bw_frames_count
 
+
     for counter in range(loop_len_count + 1):
 
         bw_name = "bw_frames/" + str(counter) + ".png"
@@ -117,6 +152,12 @@ def main():
         #print("File names are: " + bw_name + " and " +  cl_name)
         final_output = color_blend(bw_name, cl_name)
         final_output.save(final_name)
+
+
+    print("Creating video..")
+
+    png2mp4(user_input.bw_vid_input)
+
 
     print("Cleaning up extracted frames...")
     shutil.rmtree('source_frames/')

@@ -107,7 +107,7 @@ def color_blend(black_white, colored):
         "Color blend success! " +
         "Generated " +
         BColors.YELLOW +
-        append_id(black_white) +
+        append_id(black_white)[10:] +
         BColors.ENDC)
     return final
 

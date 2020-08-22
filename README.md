@@ -4,7 +4,7 @@ A workaround to DeepRemaster's low resolution limitation.
 
 Since Satoshi Iizuka's DeepRemaster functions well only with small videos (432 x 320), a solution for coloring higher resolution videos is to extract the chroma from the small video and layer it over the larger-sized black and white video.
 
-The program takes two inputs: The original black and white mp4, and the colored mp4 output from DeepRemaster. The output is a folder of all the video frames, with the color transferred over to the original black and white frames.
+The program takes two inputs: The original black and white mp4, and the colored mp4 output from DeepRemaster. The output is a full res avi, as well as a folder of all the video frames with the color transferred over to the original black and white frames.
 
 This illustrates what the program does for each frame.
 
