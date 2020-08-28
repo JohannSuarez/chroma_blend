@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 # constantants that should be front and center
 VERSION = '0.0.1'
 LICENSE = 'BSD 2-Clause'
-PKG_NAME = 'chroma_blend'
+PKG_NAME = 'cblend_modules'
 REPO_URL = 'https://github.com/JohannSuarez/chroma_blend'
 EMAIL = 'johann.suarez92@gmail.com'
 
