@@ -4,7 +4,7 @@ this is the setup.py template that should be used
 """
 from setuptools import setup, find_packages
 
-# constantants that should be front and center
+# constants that should be front and center
 VERSION = '0.0.1'
 LICENSE = 'BSD 2-Clause'
 PKG_NAME = 'cblend_modules'
