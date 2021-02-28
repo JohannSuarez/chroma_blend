@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 '''
 The main module of the chroma_blend package.
 '''
