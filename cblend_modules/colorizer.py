@@ -40,7 +40,7 @@ def size_corrector(width, height, image):
 
 
 
-def append_id(filename):
+def append_id(filename: str):
     '''
     Formatting the name of the output file.
     '''
