@@ -15,27 +15,16 @@ from cblend_modules.vid2pngs import frame_extract
 class CBlend:
 
     def __init__(self): # Initialize (Think: A constructor)
-        # Variables for png2mp4
-        self.cap = None
-        self.fps = 0
-        self.image_folder = 'output_frames'
-        self.video_name = 'final_output.avi'
-
-        self.images = 0
-        self.frame = None
-        self.height = 0
-        self.width  = 0
-        self.layers = None
-        self.video = None
-
-        # Variables for video_blend
-        self.source_frames_count = 0
-        self.bw_frames_count = 0
-        self.loop_len_count = 0
+        # Currently, there are no variables
+        # that are shared between methods. 
+        # No need for class-wide variables yet.
+        pass
 
 
 
-    def folders_manager(self):
+
+
+    def folders_manager(self): # No input
         '''
         Manages the folders required
         for the operations. If they're there, folders are cleaned.
@@ -77,109 +66,38 @@ class CBlend:
             os.mkdir("output_frames")
 
 
-    def png2mp4(self, vidin):
+    def png2mp4(self, vidin: str): 
         '''
         Function that converts the sequence of pngs to mp4's.
         '''
 
         #Get FPS of inputted bw video.
-        self.cap=cv2.VideoCapture(vidin)
-        self.fps=self.cap.get(cv2.CAP_PROP_FPS)
+        cap=cv2.VideoCapture(vidin)
+        fps=cap.get(cv2.CAP_PROP_FPS)
 
 
 
         #Preparing all variables required to write a video using the f_out frames.
-        self.images = [img for img in os.listdir(self.image_folder) if img.endswith(".png")]
-        self.frame = cv2.imread(os.path.join(self.image_folder, self.images[0]))
-        self.height, self.width, self.layers = self.frame.shape
-        self.video = cv2.VideoWriter(self.video_name, cv2.VideoWriter_fourcc(*'XVID'), self.fps, (self.width,self.height))
+        images = [img for img in os.listdir('output_frames') if img.endswith(".png")]
+        frame = cv2.imread(os.path.join('output_frames', images[0]))
+        height, width, layers = frame.shape
+        video = cv2.VideoWriter('final_output.avi', cv2.VideoWriter_fourcc(*'XVID'), fps, (width, height))
 
 
         #The list is initially unsorted, this is to fix that.
-        self.images = sorted(self.images, key=lambda x: int(x[0:-6]))
+        images = sorted(images, key=lambda x: int(x[0:-6]))
 
         print("Writing video. Please wait..")
 
-        for self.image in self.images:
+        for image in images:
 
-            self.video.write(cv2.imread(os.path.join(self.image_folder, self.image)))
+            video.write(cv2.imread(os.path.join('output_frames', image)))
 
         
 
         cv2.destroyAllWindows()
-        self.video.release()
+        video.release()
 
 
-    """
-    def video_blend(self, ):
-        '''
-        video_blend manages arguments, runs folder checks, calls other methods.
-        '''
-
-
-
-        print(fontc.OKBLUE + "Cblend activated." + fontc.ENDC)
-
-
-        self.folders_manager()
-
-
-        #The two input videos are extracted one at a time,
-        #beginning with the colored frames. Second is black and white frames.
-
-
-        source_frames_count = frame_extract(
-            user_input.colored_vid_input, "source_frames")
-        bw_frames_count = frame_extract(user_input.bw_vid_input, "bw_frames")
-
-        print(
-            fontc.CYAN +
-            "Colored frames counted: " +
-            fontc.ENDC +
-            str(source_frames_count))
-        print(
-            fontc.WHITE +
-            "Black and white frames counted: " +
-            fontc.ENDC +
-            str(bw_frames_count))
-
-        if source_frames_count != bw_frames_count:
-            print(
-                fontc.YELLOW +
-                "Warning: Inconsistent number of frames. Some frames will not be generated." +
-                fontc.ENDC)
-        else:
-            loop_len_count = source_frames_count
-
-        if source_frames_count < bw_frames_count:
-            loop_len_count = source_frames_count
-        elif bw_frames_count < source_frames_count:
-            loop_len_count = bw_frames_count
-
-
-        for counter in range(loop_len_count + 1):
-
-            bw_name = "bw_frames/" + str(counter) + ".png"
-            cl_name = "source_frames/" + str(counter) + "_c.png"
-            final_name = "output_frames/" + str(counter) + "_f.png"
-            #print("File names are: " + bw_name + " and " +  cl_name)
-            final_output = color_blend(bw_name, cl_name)
-            final_output.save(final_name)
-
-
-        print("Creating video..")
-
-        png2mp4(user_input.bw_vid_input)
-
-
-        print("Cleaning up extracted frames...")
-        shutil.rmtree('source_frames/')
-        shutil.rmtree('bw_frames/')
-
-        print("All done!")
-    """
-
-
-gabby = CBlend()
-gabby.folders_manager()
-#gabby.png2mp4("demo_files/bw.mp4")
+lise = CBlend()
+lise.png2mp4('output_frames/0_f.png')

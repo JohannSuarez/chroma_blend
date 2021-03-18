@@ -1,7 +1,3 @@
-"""
-When packaging LTF software, as libraires, or applications
-this is the setup.py template that should be used
-"""
 from setuptools import setup, find_packages
 
 # constants that should be front and center
