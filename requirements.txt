@@ -4,6 +4,7 @@ imagecodecs==2020.2.18
 imageio==2.8.0
 kiwisolver==1.2.0
 matplotlib==3.2.1
+mypy==0.812
 networkx==2.4
 numpy==1.18.4
 opencv-python==4.2.0.34

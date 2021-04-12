@@ -2,12 +2,13 @@ Use Type Hints
 
 
 Finishing refactoring code to use classes.
-    - chroma_blend2.py complete. Needs a main ()
-    - colorizer2.py complete. Also needs a main ()
-    - You need to finish vid2pngs.py
+    - chroma_blend2.py complete.
+    - colorizer2.py complete.
+    - vid2pngs.py complete
 
 
 Then use pytest to make 
     - Unit tests, for each method of each class.
     - Integration tests, for each class.
     - System test, to simulate an environment as close to the end-user environment as possible.
+    - A lot of the class methods have to be explicitly set as private functions (Internal use only)

@@ -1,5 +1,8 @@
+#!/usr/bin/env python3
+
 '''
 The main module of the chroma_blend package.
+(Improved, and adheres to OOP principles)
 '''
 
 import os
@@ -7,90 +10,104 @@ import argparse
 import shutil
 import cv2
 from cblend_modules.colorizer import BColors as fontc
-from cblend_modules.colorizer import color_blend
-from cblend_modules.vid2pngs import frame_extract
+from cblend_modules.colorizer import Colorizer
+from cblend_modules.vid2pngs import Vid2PNGs
 
 
-def folders_manager():
-    '''
-    Manages the folders required
-    for the operations. If they're there, folders are cleaned.
-    If not, the folders are created.
-    '''
-    if not os.path.isdir("bw_frames"):
-        print(
-            fontc.YELLOW +
-            "Creating folder: bw_frames. This will contain the black and white frames." +
-            fontc.ENDC)
-        os.mkdir("bw_frames")
-    else:
-        print("bw_frames directory found. Clearing contents..")
-        shutil.rmtree('bw_frames/')
-        os.mkdir("bw_frames")
+class CBlend:
 
-    if not os.path.isdir("source_frames"):
-        print(
-            fontc.YELLOW +
-            "Creating folder: bw_folder. This will contain the colored source frames." +
-            fontc.ENDC)
-        os.mkdir("source_frames")
-    else:
-        print("source_frames directory found. Clearing contents..")
-        shutil.rmtree('source_frames/')
-        os.mkdir("source_frames")
-
-    if not os.path.isdir("output_frames"):
-        print(
-            fontc.YELLOW +
-            """Creating folder: output_frames.
-            This will contain the final higher-res colored frames.
-            """
-            + fontc.ENDC)
-        os.mkdir("output_frames")
-    else:
-        print("output_frames directory found. Clearing contents..")
-        shutil.rmtree('output_frames/')
-        os.mkdir("output_frames")
-
-
-def png2mp4(vidin):
-    '''
-    Function that converts the sequence of pngs to mp4's.
-    '''
+    def __init__(self): # Initialize (Think: A constructor)
+        # Currently, there are no variables
+        # that are shared between methods. 
+        # No need for class-wide variables yet.
+        pass
 
 
 
-    #Get FPS of inputted bw video.
-    cap=cv2.VideoCapture(vidin)
-    fps = cap.get(cv2.CAP_PROP_FPS)
-
-    image_folder = 'output_frames'
-    video_name = 'final_output.avi'
 
 
-    #Preparing all variables required to write a video using the f_out frames.
-    images = [img for img in os.listdir(image_folder) if img.endswith(".png")]
-    frame = cv2.imread(os.path.join(image_folder, images[0]))
-    height, width, layers = frame.shape
-    video = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc(*'XVID'), fps, (width,height)) 
+    def folders_manager(self): # No input
+        '''
+        Manages the folders required
+        for the operations. If they're there, folders are cleaned.
+        If not, the folders are created.
+        '''
+        if not os.path.isdir("bw_frames"):
+            print(
+                fontc.YELLOW +
+                "Creating folder: bw_frames. This will contain the black and white frames." +
+                fontc.ENDC)
+            os.mkdir("bw_frames")
+        else:
+            print("bw_frames directory found. Clearing contents..")
+            shutil.rmtree('bw_frames/')
+            os.mkdir("bw_frames")
 
-    #The list is initially unsorted, this is to fix that.
-    images = sorted(images, key=lambda x: int(x[0:-6]))
+        if not os.path.isdir("source_frames"):
+            print(
+                fontc.YELLOW +
+                "Creating folder: bw_folder. This will contain the colored source frames." +
+                fontc.ENDC)
+            os.mkdir("source_frames")
+        else:
+            print("source_frames directory found. Clearing contents..")
+            shutil.rmtree('source_frames/')
+            os.mkdir("source_frames")
 
-    for image in images:
-        video.write(cv2.imread(os.path.join(image_folder, image)))
+        if not os.path.isdir("output_frames"):
+            print(
+                fontc.YELLOW +
+                """Creating folder: output_frames.
+                This will contain the final higher-res colored frames.
+                """
+                + fontc.ENDC)
+            os.mkdir("output_frames")
+        else:
+            print("output_frames directory found. Clearing contents..")
+            shutil.rmtree('output_frames/')
+            os.mkdir("output_frames")
+
+    def png2mp4(self, vidin: str): 
+        '''
+        Function that converts the sequence of pngs to mp4's.
+        '''
+
+        #Get FPS of inputted bw video.
+        cap=cv2.VideoCapture(vidin)
+        fps=cap.get(cv2.CAP_PROP_FPS)
 
 
-    cv2.destroyAllWindows()
-    video.release()
+
+        #Preparing all variables required to write a video using the f_out frames.
+        images = [img for img in os.listdir('output_frames') if img.endswith(".png")]
+        frame = cv2.imread(os.path.join('output_frames', images[0]))
+        height, width, layers = frame.shape
+        video = cv2.VideoWriter('final_output.avi', cv2.VideoWriter_fourcc(*'XVID'), fps, (width, height))
 
 
+        #The list is initially unsorted, this is to fix that.
+        images = sorted(images, key=lambda x: int(x[0:-6]))
 
-def main():
+        print("Writing video. Please wait..")
+
+        for image in images:
+
+            video.write(cv2.imread(os.path.join('output_frames', image)))
+
+        
+
+        cv2.destroyAllWindows()
+        video.release()
+
+
+def main ():
     '''
     Main function of chroma_blend.py
     Manages provded arguments, runs folder checks, calls other modules.
     '''
+
+    # First objective of main is to collected provided arguments.
+    # It'll hold them, initalize a chroma_blend object, and then give it the held arguments.
 
     source_frames_count = 0
     bw_frames_count = 0
@@ -107,16 +124,19 @@ def main():
         help="The .mp4 with the chroma that you want to blend the b&w mp4's luma on.")
     user_input = parser.parse_args()
 
-    folders_manager()
+
+    cblend_instance = CBlend()
+
+    # Check if all directories are in place.
+    # If they're not there, they're created
+    # If they're already there, clear them.
+    cblend_instance.folders_manager()
 
 
-    #The two input videos are extracted one at a time,
-    #beginning with the colored frames. Second is black and white frames.
+    v2p_instance = Vid2PNGs()
+    source_frames_count = v2p_instance.frame_extract(user_input.colored_vid_input, "source_frames")
+    bw_frames_count = v2p_instance.frame_extract(user_input.bw_vid_input, "bw_frames")
 
-
-    source_frames_count = frame_extract(
-        user_input.colored_vid_input, "source_frames")
-    bw_frames_count = frame_extract(user_input.bw_vid_input, "bw_frames")
 
     print(
         fontc.CYAN +
@@ -149,13 +169,16 @@ def main():
         cl_name = "source_frames/" + str(counter) + "_c.png"
         final_name = "output_frames/" + str(counter) + "_f.png"
         #print("File names are: " + bw_name + " and " +  cl_name)
-        final_output = color_blend(bw_name, cl_name)
+
+        colblend_instance = Colorizer()
+        final_output = colblend_instance.color_blend(bw_name, cl_name)
         final_output.save(final_name)
 
 
     print("Creating video..")
 
-    png2mp4(user_input.bw_vid_input)
+    cblend_instance.png2mp4(user_input.bw_vid_input)
+
 
 
     print("Cleaning up extracted frames...")
