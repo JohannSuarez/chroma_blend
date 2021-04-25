@@ -16,7 +16,7 @@ from cblend_modules.vid2pngs import Vid2PNGs
 
 class CBlend:
 
-    def __init__(self): # Initialize (Think: A constructor)
+    def __init__(self: object): # Initialize (Think: A constructor)
         # Currently, there are no variables
         # that are shared between methods. 
         # No need for class-wide variables yet.
@@ -26,7 +26,7 @@ class CBlend:
 
 
 
-    def folders_manager(self): # No input
+    def folders_manager(self: object): # No input
         '''
         Manages the folders required
         for the operations. If they're there, folders are cleaned.
@@ -67,7 +67,7 @@ class CBlend:
             shutil.rmtree('output_frames/')
             os.mkdir("output_frames")
 
-    def png2mp4(self, vidin: str): 
+    def png2mp4(self: object, vidin: str) -> mp4: 
         '''
         Function that converts the sequence of pngs to mp4's.
         '''
