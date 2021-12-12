@@ -1,30 +1,25 @@
 #!/usr/bin/env python3
-
 '''
 The main module of the chroma_blend package.
 (Improved, and adheres to OOP principles)
 '''
 
+from __future__ import annotations
+from cblend_modules.colorizer import BColors as fontc
+from cblend_modules.colorizer import Colorizer
+from cblend_modules.vid2pngs import Vid2PNGs
+from typing import Union, List
+
 import os
 import argparse
 import shutil
 import cv2
-from cblend_modules.colorizer import BColors as fontc
-from cblend_modules.colorizer import Colorizer
-from cblend_modules.vid2pngs import Vid2PNGs
 
 
 class CBlend:
 
     def __init__(self: object): # Initialize (Think: A constructor)
-        # Currently, there are no variables
-        # that are shared between methods. 
-        # No need for class-wide variables yet.
         pass
-
-
-
-
 
     def folders_manager(self: object): # No input
         '''
@@ -67,7 +62,7 @@ class CBlend:
             shutil.rmtree('output_frames/')
             os.mkdir("output_frames")
 
-    def png2mp4(self: object, vidin: str) -> mp4: 
+    def png2mp4(self: object, vidin: str) -> 'mp4': 
         '''
         Function that converts the sequence of pngs to mp4's.
         '''
@@ -93,8 +88,6 @@ class CBlend:
         for image in images:
 
             video.write(cv2.imread(os.path.join('output_frames', image)))
-
-        
 
         cv2.destroyAllWindows()
         video.release()
@@ -178,8 +171,6 @@ def main ():
     print("Creating video..")
 
     cblend_instance.png2mp4(user_input.bw_vid_input)
-
-
 
     print("Cleaning up extracted frames...")
     shutil.rmtree('source_frames/')
