@@ -55,6 +55,7 @@ class CBlend:
         # frames.
         images = [img for img in os.listdir(
             'output_frames') if img.endswith(".png")]
+
         frame = cv2.imread(os.path.join('output_frames', images[0]))
         height, width, layers = frame.shape
         video = cv2.VideoWriter(
@@ -136,14 +137,16 @@ def main():
     frame_names: List[tuple] = []
     
     for counter in range(loop_len_count + 1):
-        num = str(counter)
-        frame_name_set = (f'bw_frames/' + num + ".png",
-            f'source_frames/' + num + "_c.png",
-            f'output_frames/' + num + "_f.png"),
-        frame_names.append(frame_name_set)
 
-    colorizer = Colorizer()
-    colorizer.size_check(frame_names)
+        num = str(counter)
+        frame_name_3tuple = (f'bw_frames/' + num + ".png",
+            f'source_frames/' + num + "_c.png",
+            f'output_frames/' + num + "_f.png")
+ 
+        frame_names.append(frame_name_3tuple)
+
+
+    Colorizer.size_check(frame_names=frame_names)
     
     '''
         for counter in range(loop_len_count + 1):
@@ -157,7 +160,7 @@ def main():
     '''
 
     print("Cleaning up extracted frames...")
-    shutil.rmtree('source_frames/')
+    #shutil.rmtree('source_frames/')
     shutil.rmtree('bw_frames/')
 
     print("All done!")
