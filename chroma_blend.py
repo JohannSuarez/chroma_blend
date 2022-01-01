@@ -148,16 +148,16 @@ def main():
 
     Colorizer.size_check(frame_names=frame_names)
     
-    '''
-        for counter in range(loop_len_count + 1):
+    for frame in frame_names:
+        print(f'{frame[0]} + {frame[1]}')
+        final_output = Colorizer.color_blend(black_white=frame[0],
+                                             colored= frame[1])
+        final_output.save(frame[2])
 
-            final_output = colorizer.color_blend(bw_name, cl_name)
-            final_output.save(final_name)
 
-        print("Creating video..")
+    print("Creating video..")
 
-        cblend_instance.png2mp4(user_input.bw_vid_input)
-    '''
+    cblend_instance.png2mp4(user_input.bw_vid_input)
 
     print("Cleaning up extracted frames...")
     #shutil.rmtree('source_frames/')

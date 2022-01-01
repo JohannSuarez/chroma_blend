@@ -35,7 +35,6 @@ class Colorizer:
     def __init__(self) -> None:
         pass
 
-  
     @staticmethod
     def size_check(frame_names: List[tuple] ) -> None:
         '''
@@ -77,16 +76,15 @@ class Colorizer:
         ''' 
         A size corrector. The chroma image is expected to be smaller than the luma image.
         If so, the dimensions must be matched to the luma image prior to any other operation.
-
         Chroma image will be resized, and saved to disk.
         ''' 
         print(f'Size corrector invoked on {image}')
         source_image = Image.open(image)
         new_image = source_image.resize((width, height))
-        
         new_image.save(image);
 
-    def append_id(self, filename: str) -> str:
+    @staticmethod
+    def append_id(filename: str) -> str:
         '''
         Formatting the name of the output file.
         '''
@@ -94,7 +92,8 @@ class Colorizer:
         return filename[:dot_index] + '_f' + filename[dot_index:]
 
 
-    def color_blend(self, black_white, colored):
+    @staticmethod
+    def color_blend(black_white, colored):
         '''
         Parameter requirements for color_blend:
         [Assumed this is being run as a module for batch tasks]
@@ -141,10 +140,14 @@ class Colorizer:
             "Color blend success! " +
             "Generated " +
             BColors.YELLOW +
-            self.append_id(black_white)[10:] +
+            Colorizer.append_id(black_white)[10:] +
             BColors.ENDC)
         return final
 
+
+    @staticmethod
+    def fu():
+        print("Make me!!")
 
 def main ():
     '''
@@ -165,7 +168,7 @@ def main ():
     colorizer_instance = Colorizer()
 
     result = colorizer_instance.color_blend(user_input.bw_input, user_input.colored_input)
-    result.save(colorizer_instance.append_id(user_input.bw_input))
+    result.save(Colorizer.append_id(user_input.bw_input))
 
 # If this .py were used as a module, main should not execute.
 if __name__ == "__main__":
