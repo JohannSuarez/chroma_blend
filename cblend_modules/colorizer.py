@@ -38,11 +38,11 @@ class Colorizer:
     @staticmethod
     def size_check(frame_names: List[tuple] ) -> None:
         '''
-        Check an image sample from both bw_frames and source_frames. 
+        Check an image sample from both bw_frames and source_frames.
         We can do this by grabbing the first element of frame_names.
 
-        If the two image samples are the same size, use size_corrector 
-        on the entirety of either the bw_frames or the color_frames 
+        If the two image samples are the same size, use size_corrector
+        on the entirety of either the bw_frames or the color_frames
         depending on which of them needs to be upsized.
         '''
         # Each frame has three names; the bw, the colored, and the remastered.
@@ -73,11 +73,11 @@ class Colorizer:
 
     @staticmethod
     def size_corrector(width: int, height: int, image):
-        ''' 
+        '''
         A size corrector. The chroma image is expected to be smaller than the luma image.
         If so, the dimensions must be matched to the luma image prior to any other operation.
         Chroma image will be resized, and saved to disk.
-        ''' 
+        '''
         print(f'Size corrector invoked on {image}')
         source_image = Image.open(image)
         new_image = source_image.resize((width, height))
