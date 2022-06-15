@@ -135,19 +135,19 @@ def main():
         source_frames_count < bw_frames_count) else bw_frames_count
 
     frame_names: List[tuple] = []
-    
+
     for counter in range(loop_len_count + 1):
 
         num = str(counter)
         frame_name_3tuple = (f'bw_frames/' + num + ".png",
             f'source_frames/' + num + "_c.png",
             f'output_frames/' + num + "_f.png")
- 
+
         frame_names.append(frame_name_3tuple)
 
 
     Colorizer.size_check(frame_names=frame_names)
-    
+
     for frame in frame_names:
         print(f'{frame[0]} + {frame[1]}')
         final_output = Colorizer.color_blend(black_white=frame[0],

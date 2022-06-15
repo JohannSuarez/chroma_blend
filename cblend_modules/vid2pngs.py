@@ -17,8 +17,6 @@ class Vid2PNGs:
         pass
 
 
-
-
     def video_length(self, vid_input: str):
         '''
         Determines video length.
@@ -166,8 +164,6 @@ def main():
     user_input = parser.parse_args()
 
     vid2png_instance.frame_extract(user_input.vid_input, "NULL")
-
-    
 
 
 if __name__ == "__main__":
