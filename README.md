@@ -1,4 +1,6 @@
-﻿# Chroma Blend
+<div align="center">
+    <h1>Chroma Blend</h1>
+</div>
 
 A workaround to DeepRemaster's low resolution limitation.
 
@@ -10,12 +12,14 @@ This illustrates what the program does for each frame.
 
 <img src="https://i.imgur.com/Euuqf5K.gif" width="480" height="270">
 
-Demonstration video :
+</br>
+
+Demonstration video:
 
 
 [![](http://img.youtube.com/vi/zv7PUKbj3yM/0.jpg)](http://www.youtube.com/watch?v=zv7PUKbj3yM "")
 
-## Installation
+## Installation 🏗
 
 Download the repository:
 
@@ -29,7 +33,7 @@ pip install -r requirements.txt
 ```
 You're good to go!
 
-## Usage
+## Usage 🏄
 
 ```bash
 python3 chroma_blend.py [black_and_white.mp4] [colorized.mp4]
@@ -52,5 +56,5 @@ python3 vid2pngs.py [input_video]
 ```
 
 
-## License
+## License 🏛
 [MIT](https://choosealicense.com/licenses/mit/)
